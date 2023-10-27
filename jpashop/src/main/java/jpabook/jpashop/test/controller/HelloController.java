@@ -4,11 +4,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class HelloController {
 	
 	@GetMapping("hello")
 	public String hello(Model model) {
+		
+		/**
+		 * SLF4J는 Simple Logging Facade for Java의 약자로 라이브러리 인터페이스 역할이며,
+		 * Logback이 실질적인 로깅 라이브러리 구현체로, SLF4J는 Logback를 사용하기 쉽게 포장하는 역할
+		 */
+		log.info("home controller");
+		
 		model.addAttribute("data", "hello!!!");
 		
 		/**
