@@ -1,4 +1,4 @@
-package jpabook.jpashop.test.entity;
+package jpabook.jpashop;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-public class testEntity {
+public class Hello {
 	
 	@Id
 	String id;
@@ -17,7 +17,7 @@ public class testEntity {
 	String password;
 
 	@Builder
-	public testEntity(String id, String password) {
+	public Hello(String id, String password) {
 		this.id = id;
 		this.password = password;
 	}
