@@ -24,10 +24,9 @@ public class Member {
 	@Embedded // JPA 내장타입 매핑 시 embedded 어노테이션 명시
 	private Address address;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "member") // 읽기전용, 연관관게의 주인 설정
 	private List<Order> orders = new ArrayList<>();
 
-	
 	public void setName(String name) {
 		this.name = name;
 	}
