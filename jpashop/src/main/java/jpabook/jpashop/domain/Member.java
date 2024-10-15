@@ -10,9 +10,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Getter
+@Getter @Setter
 public class Member {
 
 	@Id @GeneratedValue
@@ -27,16 +28,4 @@ public class Member {
 	@OneToMany(mappedBy = "member") // 읽기전용, 연관관게의 주인 설정
 	private List<Order> orders = new ArrayList<>();
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
-	}
-	
 }

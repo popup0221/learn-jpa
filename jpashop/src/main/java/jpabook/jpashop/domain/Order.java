@@ -14,9 +14,10 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Getter
+@Getter @Setter
 @Table(name = "orders") // 지정 안할 시 클래스명으로 자동생성 - order는 예약어
 public class Order {
 
@@ -41,24 +42,4 @@ public class Order {
 	
 	private OrderStatus status; // 주문상태 (ORDER/CANCEL)
 
-	public void setMember(Member member) {
-		this.member = member;
-	}
-
-	public void setOrderItems(List<OrderItem> orderItems) {
-		this.orderItems = orderItems;
-	}
-
-	public void setDelivery(Delivery delivery) {
-		this.delivery = delivery;
-	}
-
-	public void setOrderDate(LocalDateTime orderDate) {
-		this.orderDate = orderDate;
-	}
-
-	public void setStatus(OrderStatus status) {
-		this.status = status;
-	}
-	
 }
