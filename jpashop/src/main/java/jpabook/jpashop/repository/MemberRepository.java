@@ -17,11 +17,15 @@ import jpabook.jpashop.domain.Member;
 @Repository
 public class MemberRepository {
 
-	// jpa 표준 어노테이션 - spring이 entity manager를 생성하여 주입해줌
+	// @PersistenceContext(jpa 표준 어노테이션 )- spring이 entity manager 펙토리를 생성하여 주입해줌
 	@PersistenceContext
 	private EntityManager em;
+	
+	// @PersistenceUnit - 직접 entity manager 펙토리를 생성 후 주입
+	// private EntityManagerFactory emf;
 
 	public void save(Member member) {
+		// persist - 영속성 컨텍스트에 엔티티를 넣음 -> transaction이 commit 되는 시점에 db에 반영
 		em.persist(member);
 	};
 
@@ -30,9 +34,14 @@ public class MemberRepository {
 	}
 
 	public List<Member> findAll() {
-		// createQuery(jpql, Entity.class) 쿼리생성 메소드
+		// createQuery(jpql, type) 쿼리생성 메소드
 		// getResultList() // 조회 결과를 List로 return 해주는 메소드
 		return em.createQuery("select m from Member m", Member.class).getResultList();
 	}
 
+	public List<Member> findByName(String name) {
+		 return em.createQuery("select m from Member m where m.name = :name", Member.class)
+				 .setParameter("name", name)
+				 .getResultList();
+	}
 }
