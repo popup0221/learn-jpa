@@ -17,7 +17,7 @@ import jpabook.jpashop.domain.Member;
 @Repository
 public class MemberRepository {
 
-	// @PersistenceContext(jpa 표준 어노테이션 )- spring이 entity manager 펙토리를 생성하여 주입해줌
+	// @PersistenceContext(jpa 표준 어노테이션)- spring이 entity manager 펙토리를 생성하여 주입해줌
 	@PersistenceContext
 	private EntityManager em;
 	
