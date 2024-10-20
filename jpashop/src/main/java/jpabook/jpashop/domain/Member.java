@@ -20,6 +20,7 @@ public class Member {
 	@Column(name = "member_id")
 	private Long Id;
 	
+	@Column(unique = true)
 	private String name;
 	
 	@Embedded // JPA 내장타입 매핑 시 embedded 어노테이션 명시

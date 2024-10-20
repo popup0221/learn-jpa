@@ -18,6 +18,7 @@ import jpabook.jpashop.domain.Member;
 public class MemberRepository {
 
 	// @PersistenceContext(jpa 표준 어노테이션)- spring이 entity manager 펙토리를 생성하여 주입해줌
+	// spring data jpa(spring boot) 사용 시 생성자 주입으로 사용 가능
 	@PersistenceContext
 	private EntityManager em;
 	
@@ -25,7 +26,7 @@ public class MemberRepository {
 	// private EntityManagerFactory emf;
 
 	public void save(Member member) {
-		// persist - 영속성 컨텍스트에 엔티티를 넣음 -> transaction이 commit 되는 시점에 db에 반영
+		// persist - 영속성 컨텍스트에 엔티티를 넣음(table pk가 key값) -> transaction이 commit 되는 시점에 db에 반영
 		em.persist(member);
 	};
 
