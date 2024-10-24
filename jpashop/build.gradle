@@ -31,6 +31,8 @@ dependencies {
 	// build - recompile(특정 template만 다시 컴파일)
 	implementation 'org.springframework.boot:spring-boot-devtools'
 	compileOnly 'org.projectlombok:lombok'
+	// https://www.h2database.com/html/cheatSheet.html
+	// h2는 java로 운영되기 때문에 실행 메모리에서 테스트 할 수 있음 - 인 메모리 모드 사용
 	runtimeOnly 'com.h2database:h2'
 	
 	annotationProcessor 'org.projectlombok:lombok'
