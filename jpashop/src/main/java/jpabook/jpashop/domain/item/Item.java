@@ -12,6 +12,7 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.ManyToMany;
 import jpabook.jpashop.domain.Category;
+import jpabook.jpashop.exception.NotEnoughStockException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,9 +38,32 @@ public abstract class Item {
 	
 	private String name;
 	private int price;
-	private int StockQuantity;
+	private int stockQuantity;
 	
 	@ManyToMany(mappedBy = "items")
 	private List<Category> categories = new ArrayList<>();
 	
+	//==비즈니스 로직==//
+	// 도메인 지향 개발 및 객체지향적인 코드를 위해 엔티티가 가지고 있는 필드 값에 대한 변경은 엔티티 내에서 만듦으로써 응집도를 향상시킬 수 있다.
+	// setter를 사용하여 외부 서비스 내에서 필드 값 변경은 하지 말아야한다 - 세터 생성은 안하는게 좋음
+	
+	/**
+	 * @param quantity 
+	 * stock 증가
+	 */
+	public void addStock(int quantity) {
+		this.stockQuantity += quantity;
+	}
+
+	/**
+	 * @param quantity
+	 * stock 감소
+	 */
+	public void removeStock(int quantity) {
+		int restStock = this.stockQuantity - quantity;
+		if(restStock < 0) {
+			throw new NotEnoughStockException("need more stock");
+		}
+		this.stockQuantity = restStock;
+	}
 }
