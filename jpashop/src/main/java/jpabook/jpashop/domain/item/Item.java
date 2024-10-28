@@ -23,7 +23,7 @@ import lombok.Setter;
  * @Inheritance(strategy = InheritanceType.*)
  * SINGLE_TABLE: 한 테이블에 몰아넣기
  * TABLE_PER_CLASS: 테이블 나누기
- * JOINED:정교화 된 전략
+ * JOINED: 조인 된 테이블(정교화 된 전략)
  */
 
 @Entity
