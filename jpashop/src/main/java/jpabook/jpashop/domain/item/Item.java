@@ -20,10 +20,14 @@ import lombok.Setter;
  * 
  * @author popup
  * JPA에서 상속관게 설정 시 전략을 설정해야함
+ * 
  * @Inheritance(strategy = InheritanceType.*)
  * SINGLE_TABLE: 한 테이블에 몰아넣기
  * TABLE_PER_CLASS: 테이블 나누기
  * JOINED: 조인 된 테이블(정교화 된 전략)
+ * 
+ * @DiscriminatorColumn(name = "dtype") - 부모 클래스에 선언, 하위 클래스를 구분하는 용도의 컬럼
+ * @DiscriminatorValue("**") - 하위 클래스에 선언, 엔티티 저장 시 슈퍼타입의 구분 컬럼에 저장할 값을 지정(default 클래스 이름)
  */
 
 @Entity
