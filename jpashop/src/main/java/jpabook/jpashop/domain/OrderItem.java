@@ -31,4 +31,12 @@ public class OrderItem {
 	
 	private int count; // 주문 수량
 
+	//==비즈니스 메소드==//
+    public void cancel() {
+		getItem().addStock(count);
+    }
+
+	public int getTotalPrice() {
+		return getOrderPrice() * getCount();
+	}
 }
