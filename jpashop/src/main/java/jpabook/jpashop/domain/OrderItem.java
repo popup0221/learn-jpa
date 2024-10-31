@@ -8,11 +8,20 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jpabook.jpashop.domain.item.Item;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+/**
+ * @NoArgsConstructor(access = AccessLevel.PROTECTED) - jpa는 spec상 protected까지 생성자로 만들 수 있다
+ * 이를 통해 외부에서 생성 메소드 이외에 new로 생성자 생성을 막음
+ * protected OrderItem () {} 와 동일
+ */
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem {
 
 	@Id @GeneratedValue
