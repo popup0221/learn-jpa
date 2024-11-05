@@ -6,8 +6,8 @@ import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.domain.item.Book;
+import jpabook.jpashop.exception.NotEnoughStockException;
 import jpabook.jpashop.repository.OrderRepository;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,8 +54,8 @@ public class OrderServiceTest {
         assertEquals("주문 수량만큼 재고가 줄어야 한다", 8, book.getStockQuantity());
     }
 
-    @Test
-    public void 주문취소() throws Exception {
+    @Test(expected = NotEnoughStockException.class)
+    public void 상품주문_재고수량초과() throws Exception {
         // given
 
         // when
@@ -64,7 +64,7 @@ public class OrderServiceTest {
     }
 
     @Test
-    public void 상품주문_재고수량초과() throws Exception {
+    public void 주문취소() throws Exception {
         // given
 
         // when
