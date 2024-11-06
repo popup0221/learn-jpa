@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -29,16 +30,8 @@ public class OrderServiceTest {
     @Test
     public void 상품주문() throws Exception {
         // given
-        Member member = new Member();
-        member.setName("회원1");
-        member.setAddress(new Address("서울", "구일로", "110"));
-        em.persist(member);
-
-        Book book = new Book();
-        book.setName("시골 JPA");
-        book.setPrice(10000);
-        book.setStockQuantity(10);
-        em.persist(book);
+        Member member = getMember("회원1", getAddress());
+        Book book = getBook("name", 10000, 10);
 
         int orderCount = 2;
 
@@ -57,19 +50,57 @@ public class OrderServiceTest {
     @Test(expected = NotEnoughStockException.class)
     public void 상품주문_재고수량초과() throws Exception {
         // given
+        Member member = getMember("회원1", getAddress());
+        Book book = getBook("name", 10000, 10);
+
+        int orderCount = 11;
 
         // when
+        orderService.order(member.getId(), book.getId(), orderCount);
 
         // then
+        fail("재고 수량 부족 예외가 발행해야 한다.");
     }
 
     @Test
     public void 주문취소() throws Exception {
         // given
+        Member member = getMember("회원1", getAddress());
+        Book book = getBook("name", 10000, 10);
+
+        int orderCount = 2;
+
+        Long orderId = orderService.order(member.getId(), book.getId(), orderCount);
 
         // when
+        orderService.cancelOrder(orderId);
 
         // then
+        Order getOrder = orderRepository.findOne(orderId);
+
+        assertEquals("주문 취소 시 상태는 CANCEL 이다", OrderStatus.CANCEL, getOrder.getStatus());
+        assertEquals("주문이 취소 된 상품은 그만큼 재고가 증가해야 한다", 10, book.getStockQuantity());
+    }
+
+    private Member getMember(String name, Address address) {
+        Member member = new Member();
+        member.setName(name);
+        member.setAddress(address);
+        em.persist(member);
+        return member;
+    }
+
+    private static Address getAddress() {
+        return new Address("서울", "구일로", "110");
+    }
+
+    private Book getBook(String name, int price, int stockQuantity) {
+        Book book = new Book();
+        book.setName(name);
+        book.setPrice(price);
+        book.setStockQuantity(stockQuantity);
+        em.persist(book);
+        return book;
     }
 
 }
