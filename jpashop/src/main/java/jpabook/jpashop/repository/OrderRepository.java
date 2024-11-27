@@ -30,20 +30,21 @@ public class OrderRepository {
     public Order findOne(Long id) {
         return em.find(Order.class, id);
     }
-
-
-    public List<Order> findAll(OrderSearch orderSearch) {
-    	return em.createQuery("select o from o join o.member m" + 
-    			" where o.status = :status " +
-			 	" and m.name like :name", Order.class)
-			 	.setParameter("status", orderSearch.getOrderStatus())
-			 	.setParameter("name", orderSearch.getMemberName())
-//    			.setFirstResult(100) // 페이징 / param(startPosition) -> 100 부터 시작이란 의미
-			 	.setMaxResults(1000) // 최대 1000건 조회
-			 	.getResultList();
-    }
     
-
+//    public List<Order> findAll(OrderSearch orderSearch) {
+//    	return em.createQuery("select o from o join o.member m" + 
+//    			" where o.status = :status " +
+//			 	" and m.name like :name", Order.class)
+//			 	.setParameter("status", orderSearch.getOrderStatus())
+//			 	.setParameter("name", orderSearch.getMemberName())
+//    			.setFirstResult(100) // 페이징 / param(startPosition) -> 100 부터 시작이란 의미
+//			 	.setMaxResults(1000) // 최대 1000건 조회
+//			 	.getResultList();
+//    }
+    
+    /**
+     * 1. jpql 사용하여 동적쿼리 사용 - 실수로 인한 버그 발생이 많고 복잡함
+     */
     public List<Order> findAllByString(OrderSearch orderSearch) {
 
             String jpql = "select o from Order o join o.member m";
@@ -85,7 +86,7 @@ public class OrderRepository {
     }
 
     /**
-     * JPA Criteria
+     * 2. JPA Criteria 사용 - 코드를 보고 쿼리문 예측이 어렵고 유지보수가 힘듬
      */
     public List<Order> findAllByCriteria(OrderSearch orderSearch) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -111,5 +112,8 @@ public class OrderRepository {
         TypedQuery<Order> query = em.createQuery(cq).setMaxResults(1000);
         return query.getResultList();
     }
-
+    
+    /**
+     * 3. queryDsl을 사용
+     */
 }
